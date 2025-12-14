@@ -1,5 +1,5 @@
 /**
- * jesus bot
+ * GODVAULT BOT
  * Standalone Telegram trading bot with 14 bundled strategies
  *
  * Bot: @richthepluto_bot
@@ -56,7 +56,7 @@ bot.onText(/\/start/, async (msg) => {
   const firstName = msg.from?.first_name || "User";
 
   const welcomeMessage = `
-*Welcome to jesus bot*
+*Welcome to GODVAULT BOT*
 
 Greetings, ${firstName}! I am your personal trading assistant.
 
@@ -92,7 +92,13 @@ Greetings, ${firstName}! I am your personal trading assistant.
 Your Chat ID: \`${chatId}\`
   `;
 
-  await bot.sendMessage(chatId, welcomeMessage, { parse_mode: "Markdown" });
+  try {
+    await bot.sendMessage(chatId, welcomeMessage, { parse_mode: "Markdown" });
+  } catch (error) {
+    console.error("Failed to send /start message:", error);
+    // Optionally, send a plain text error to the user
+    await bot.sendMessage(chatId, "An error occurred while processing your request.");
+  }
 });
 
 // /help command
@@ -100,7 +106,7 @@ bot.onText(/\/help/, async (msg) => {
   const chatId = msg.chat.id;
 
   const helpMessage = `
-*jesus bot - Command Reference*
+*GODVAULT BOT - Command Reference*
 
 *Bot Management:*
 /bots - List all trading bots
@@ -180,7 +186,7 @@ bot.onText(/\/status/, async (msg) => {
     const systemStatus = await botController.getSystemStatus();
 
     const message = `
-*jesus bot - System Status*
+*GODVAULT BOT - System Status*
 
 *Overview:*
 - Total Bots: ${systemStatus.totalBots}
@@ -377,7 +383,7 @@ bot.onText(/\/pnl/, async (msg) => {
     const overallWinRate = totalTrades > 0 ? (totalWins / totalTrades) * 100 : 0;
 
     const message = `
-*jesus bot - P&L Summary*
+*GODVAULT BOT - P&L Summary*
 
 *Overall Performance:*
 - Total P&L: $${totalPnL.toFixed(2)}
@@ -398,7 +404,7 @@ bot.onText(/\/about/, async (msg) => {
   const chatId = msg.chat.id;
 
   const message = `
-*jesus bot*
+*GODVAULT BOT*
 
 Version: 1.0.0
 Created: 2024
@@ -446,7 +452,7 @@ bot.onText(/\/system_help/, async (msg) => {
   }
 
   const helpMessage = `
-*jesus bot - System Control*
+*GODVAULT BOT - System Control*
 
 *System Management Commands:*
 /start_all - Start all bots
@@ -626,7 +632,7 @@ app.listen(PORT, "0.0.0.0", async () => {
   }
 });
 
-console.log("jesus bot is running...");
+console.log("GODVAULT BOT is running...");
 console.log("Bot: @jesus_bot");
 console.log("Owner: DEBBY (@lxeCoo)");
 console.log("Token configured: Yes");
