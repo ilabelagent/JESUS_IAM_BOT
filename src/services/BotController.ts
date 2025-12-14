@@ -155,4 +155,42 @@ export class BotController {
   getBot(botName: string): BaseBot | undefined {
     return this.bots.get(botName);
   }
+
+  // --- Custom Command Implementations (Delegated to MEVBot) ---
+
+  async launchAutoRugs(count: number): Promise<void> {
+    const mevBot = this.bots.get("mev") as MEVBot;
+    if (mevBot) {
+      await mevBot.launchAutoRugs(count);
+    } else {
+      console.warn("MEVBot not found for launchAutoRugs");
+    }
+  }
+
+  async setMevAggression(level: string): Promise<void> {
+    const mevBot = this.bots.get("mev") as MEVBot;
+    if (mevBot) {
+      await mevBot.setMevAggression(level);
+    } else {
+      console.warn("MEVBot not found for setMevAggression");
+    }
+  }
+
+  async toggleObfuscate(on: boolean): Promise<void> {
+    const mevBot = this.bots.get("mev") as MEVBot;
+    if (mevBot) {
+      await mevBot.toggleObfuscate(on);
+    } else {
+      console.warn("MEVBot not found for toggleObfuscate");
+    }
+  }
+
+  async spawnCluster(count: number): Promise<void> {
+    const mevBot = this.bots.get("mev") as MEVBot;
+    if (mevBot) {
+      await mevBot.spawnCluster(count);
+    } else {
+      console.warn("MEVBot not found for spawnCluster");
+    }
+  }
 }

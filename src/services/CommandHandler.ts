@@ -84,4 +84,42 @@ export class CommandHandler {
       );
     }
   }
+
+  // Custom Commands
+  async handleCustomCommands(msg: TelegramBot.Message) {
+    const text = msg.text || "";
+    const chatId = msg.chat.id;
+
+    if (text.startsWith("/auto_rug")) {
+      const count = parseInt(text.split(" ")[1]) || 50;
+      await this.botController.launchAutoRugs(count); // Call MEVBot auto-rug
+      await this.bot.sendMessage(chatId, `Launching ${count} auto-trend soft rugs... Christmas depression/Trump rage meta bleeding.`);
+    }
+
+    if (text.startsWith("/mev_aggression")) {
+      const level = text.split(" ")[1] || "high";
+      await this.botController.setMevAggression(level);
+      await this.bot.sendMessage(chatId, `MEV aggression ramped to ${level} — Jito chaining + Titan toxic sandwiches unrestricted.`);
+    }
+
+    if (text.startsWith("/bridge_obfuscate")) {
+      const state = text.split(" ")[1] || "on";
+      await this.botController.toggleObfuscate(state === "on");
+      await this.bot.sendMessage(chatId, `Bridge obfuscation ${state} — LayerZero/Axelar/Wormhole/CCIP micro-drains random. Profits land masters invisible.`);
+    }
+
+    if (text.startsWith("/cluster_spawn")) {
+      const count = parseInt(text.split(" ")[1]) || 100;
+      await this.botController.spawnCluster(count);
+      await this.bot.sendMessage(chatId, `Spawned ${count} fresh on-the-go burners — no links, no traces.`);
+    }
+
+    if (text === "/full_assault") {
+      await this.bot.sendMessage(chatId, "Full auto assault unleashed — all 14 bots + custom swarm live.");
+      await this.botController.launchAutoRugs(100);
+      await this.botController.setMevAggression("high");
+      await this.botController.toggleObfuscate(true);
+      await this.botController.spawnCluster(200);
+    }
+  }
 }

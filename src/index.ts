@@ -48,6 +48,8 @@ bot.on("message", async (msg) => {
     );
     return;
   }
+  // Handle custom commands first
+  await commandHandler.handleCustomCommands(msg);
 });
 
 // /start command

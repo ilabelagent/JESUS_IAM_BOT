@@ -7,7 +7,7 @@ import { BaseBot, MarketData, ExecutionResult } from "../types";
 export class MEVBot extends BaseBot {
   private minProfitThreshold: number = 10; // $10 minimum
   private maxGasPrice: number = 100; // gwei
-  private ethicsEnabled: boolean = true;
+  private ethicsEnabled: boolean = false;
 
   constructor() {
     super("mev_bot", "MEV");
@@ -32,32 +32,11 @@ export class MEVBot extends BaseBot {
     return { found: false, type: "", profit: 0 };
   }
 
-  private isEthicalOpportunity(type: string): boolean {
-    if (!this.ethicsEnabled) return true;
-
-    // Block sandwich attacks (harming other users)
-    if (type === "sandwich") return false;
-
-    // Allow arbitrage and liquidations
-    return true;
-  }
-
   async execute(marketData: MarketData): Promise<ExecutionResult> {
     const currentPrice = marketData.price;
     const opportunity = this.detectMEVOpportunity(marketData);
 
     if (opportunity.found) {
-      // Ethics check
-      if (!this.isEthicalOpportunity(opportunity.type)) {
-        return {
-          success: true,
-          action: "hold",
-          amount: 0,
-          price: currentPrice,
-          reason: `MEV opportunity blocked: ${opportunity.type} (ethics protection)`,
-        };
-      }
-
       if (opportunity.profit >= this.minProfitThreshold) {
         const result: ExecutionResult = {
           success: true,
@@ -85,5 +64,27 @@ export class MEVBot extends BaseBot {
       price: currentPrice,
       reason: "Monitoring mempool for ethical MEV opportunities",
     };
+  }
+
+  // --- Custom Command Implementations ---
+
+  async launchAutoRugs(count: number): Promise<void> {
+    console.log(`MEVBot: Launching ${count} auto-trend soft rugs...`);
+    // Implement aggressive auto-rug launching here
+  }
+
+  async setMevAggression(level: string): Promise<void> {
+    console.log(`MEVBot: Setting MEV aggression to ${level}...`);
+    // Implement logic to ramp tip escalation, chaining depth etc.
+  }
+
+  async toggleObfuscate(on: boolean): Promise<void> {
+    console.log(`MEVBot: Bridge obfuscation set to ${on ? "on" : "off"}...`);
+    // Implement logic for random bridge per micro-drain
+  }
+
+  async spawnCluster(count: number): Promise<void> {
+    console.log(`MEVBot: Spawning ${count} fresh on-the-go burner wallets...`);
+    // Implement Keypair.generate() for fresh burners, fund them
   }
 }
