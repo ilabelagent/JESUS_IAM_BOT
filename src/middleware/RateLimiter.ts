@@ -1,54 +1,55 @@
 /**
- * Rate Limiter - Prevents command spam
+ * Rate Limiter - Prevents spam and abuse
  */
 
+interface RateLimitEntry {
+  count: number;
+  lastReset: number;
+}
+
 export class RateLimiter {
-  private requests: Map<string, number[]>;
+  private limits: Map<string, RateLimitEntry> = new Map();
   private maxRequests: number;
   private windowMs: number;
 
-  constructor(maxRequests: number = 10, windowMs: number = 60000) {
-    this.requests = new Map();
+  constructor(maxRequests: number = 30, windowMs: number = 60000) {
     this.maxRequests = maxRequests;
     this.windowMs = windowMs;
   }
 
   checkLimit(userId: string): boolean {
     const now = Date.now();
-    const userRequests = this.requests.get(userId) || [];
+    let entry = this.limits.get(userId);
 
-    // Remove expired requests
-    const validRequests = userRequests.filter(
-      (timestamp) => now - timestamp < this.windowMs
-    );
-
-    if (validRequests.length >= this.maxRequests) {
-      return false;
+    if (!entry || now - entry.lastReset > this.windowMs) {
+      entry = { count: 0, lastReset: now };
     }
 
-    validRequests.push(now);
-    this.requests.set(userId, validRequests);
+    entry.count++;
+    this.limits.set(userId, entry);
 
-    return true;
+    return entry.count <= this.maxRequests;
+  }
+
+  getRemainingRequests(userId: string): number {
+    const entry = this.limits.get(userId);
+    if (!entry) {
+      return this.maxRequests;
+    }
+
+    const now = Date.now();
+    if (now - entry.lastReset > this.windowMs) {
+      return this.maxRequests;
+    }
+
+    return Math.max(0, this.maxRequests - entry.count);
   }
 
   reset(userId: string): void {
-    this.requests.delete(userId);
+    this.limits.delete(userId);
   }
 
-  cleanup(): void {
-    const now = Date.now();
-
-    for (const [userId, requests] of this.requests.entries()) {
-      const validRequests = requests.filter(
-        (timestamp) => now - timestamp < this.windowMs
-      );
-
-      if (validRequests.length === 0) {
-        this.requests.delete(userId);
-      } else {
-        this.requests.set(userId, validRequests);
-      }
-    }
+  resetAll(): void {
+    this.limits.clear();
   }
 }

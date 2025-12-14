@@ -21,11 +21,10 @@ export class CommandHandler {
   ): Promise<void> {
     await this.bot.sendMessage(
       chatId,
-      `⏳ Executing ${command} for ${botNames.length} bots...`
+      `Executing ${command} for ${botNames.length} bots...`
     );
 
-    const results: Array<{ bot: string; success: boolean; message: string }> =
-      [];
+    const results: Array<{ bot: string; success: boolean; message: string }> = [];
 
     for (const botName of botNames) {
       try {
@@ -48,10 +47,10 @@ export class CommandHandler {
       }
     }
 
-    let message = `📋 *Multi-Bot ${command.toUpperCase()} Results:*\n\n`;
+    let message = `*Multi-Bot ${command.toUpperCase()} Results:*\n\n`;
 
     for (const result of results) {
-      const emoji = result.success ? "✅" : "❌";
+      const emoji = result.success ? "[OK]" : "[FAIL]";
       message += `${emoji} ${result.bot}: ${result.message}\n`;
     }
 
@@ -62,7 +61,6 @@ export class CommandHandler {
     chatId: number,
     text: string
   ): Promise<void> {
-    // Simple NLP for common patterns
     const lowerText = text.toLowerCase();
 
     if (
@@ -78,12 +76,11 @@ export class CommandHandler {
       const botNames = this.botController.getBotList();
       await this.handleMultiBotCommand(chatId, "stop", botNames);
     } else if (lowerText.includes("show me") && lowerText.includes("metrics")) {
-      await this.bot.sendMessage(chatId, "📊 Fetching all metrics...");
-      // Delegate to metrics command
+      await this.bot.sendMessage(chatId, "Fetching all metrics...");
     } else {
       await this.bot.sendMessage(
         chatId,
-        "🤔 I didn't understand that command. Try /help for available commands."
+        "I didn't understand that command. Try /help for available commands."
       );
     }
   }
