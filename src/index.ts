@@ -430,7 +430,7 @@ Empowering traders with automated excellence.
 - Gas Optimization
 - Mining Management
 
-*Bot:* @richthepluto_bot
+*Bot:* @jesus_bot
   `;
 
   await bot.sendMessage(chatId, message, { parse_mode: "Markdown" });
@@ -627,7 +627,7 @@ app.listen(PORT, "0.0.0.0", async () => {
 });
 
 console.log("jesus bot is running...");
-console.log("Bot: @richthepluto_bot");
+console.log("Bot: @jesus_bot");
 console.log("Owner: DEBBY (@lxeCoo)");
 console.log("Token configured: Yes");
 console.log("Ready to serve!");
