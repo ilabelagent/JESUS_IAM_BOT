@@ -1,5 +1,5 @@
 /**
- * RICHTHEPLUTO BOT
+ * jesus bot
  * Standalone Telegram trading bot with 14 bundled strategies
  *
  * Bot: @richthepluto_bot
@@ -56,7 +56,7 @@ bot.onText(/\/start/, async (msg) => {
   const firstName = msg.from?.first_name || "User";
 
   const welcomeMessage = `
-*Welcome to RICHTHEPLUTO BOT*
+*Welcome to jesus bot*
 
 Greetings, ${firstName}! I am your personal trading assistant.
 
@@ -100,7 +100,7 @@ bot.onText(/\/help/, async (msg) => {
   const chatId = msg.chat.id;
 
   const helpMessage = `
-*RICHTHEPLUTO BOT - Command Reference*
+*jesus bot - Command Reference*
 
 *Bot Management:*
 /bots - List all trading bots
@@ -180,7 +180,7 @@ bot.onText(/\/status/, async (msg) => {
     const systemStatus = await botController.getSystemStatus();
 
     const message = `
-*RICHTHEPLUTO BOT - System Status*
+*jesus bot - System Status*
 
 *Overview:*
 - Total Bots: ${systemStatus.totalBots}
@@ -377,7 +377,7 @@ bot.onText(/\/pnl/, async (msg) => {
     const overallWinRate = totalTrades > 0 ? (totalWins / totalTrades) * 100 : 0;
 
     const message = `
-*RICHTHEPLUTO BOT - P&L Summary*
+*jesus bot - P&L Summary*
 
 *Overall Performance:*
 - Total P&L: $${totalPnL.toFixed(2)}
@@ -398,7 +398,7 @@ bot.onText(/\/about/, async (msg) => {
   const chatId = msg.chat.id;
 
   const message = `
-*RICHTHEPLUTO BOT*
+*jesus bot*
 
 Version: 1.0.0
 Created: 2024
@@ -446,7 +446,7 @@ bot.onText(/\/system_help/, async (msg) => {
   }
 
   const helpMessage = `
-*RICHTHEPLUTO BOT - System Control*
+*jesus bot - System Control*
 
 *System Management Commands:*
 /start_all - Start all bots
@@ -626,7 +626,7 @@ app.listen(PORT, "0.0.0.0", async () => {
   }
 });
 
-console.log("RICHTHEPLUTO BOT is running...");
+console.log("jesus bot is running...");
 console.log("Bot: @richthepluto_bot");
 console.log("Owner: DEBBY (@lxeCoo)");
 console.log("Token configured: Yes");
