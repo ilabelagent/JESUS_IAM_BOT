@@ -430,7 +430,7 @@ Empowering traders with automated excellence.
 - Gas Optimization
 - Mining Management
 
-*Bot:* @jesus_bot
+*Bot:* @GODVAULTBOT
   `;
 
   await bot.sendMessage(chatId, message, { parse_mode: "Markdown" });
@@ -586,7 +586,7 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.json({
     status: "healthy",
-    bot: "@richthepluto_bot",
+    bot: "@GODVAULTBOT",
     timestamp: new Date().toISOString()
   });
 });
